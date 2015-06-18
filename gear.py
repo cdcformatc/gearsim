@@ -13,8 +13,15 @@ class Gear:
         self.rect = pygame.Rect(0,0,self.r,self.r)        
         self.setPosition(bound.center[0],bound.center[1])
         
+        self.surface = pygame.Surface((self.r,self.r))
+        self.surface.fill(self.color)
+        
     def draw(self, screen):
-        pygame.draw.circle(screen, self.color, self.rect.center, self.r)
+        
+        screen.blit(self.surface,self.rect)
+        
+    def update(self,dt):
+        pass
         
     def setPosition(self,newx,newy):
         self.rect.center = newx,newy

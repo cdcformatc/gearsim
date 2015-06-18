@@ -55,6 +55,7 @@ def main():
                     ox, oy = mx, my
         # draw items
         for g in gears:
+            g.update(dt)
             g.draw(screen)
             
         pygame.display.flip()
