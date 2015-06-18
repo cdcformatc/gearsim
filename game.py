@@ -1,6 +1,7 @@
 import pygame
 import os
 import sys
+import random
 
 from gear import Gear
 
@@ -8,17 +9,6 @@ os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 #admin settings
 FIELD_SIZE=900
-
-def read_keyboard():
-    x = pygame.key.get_pressed()
-    # if x[pygame.K_UP]:
-    # if x[pygame.K_DOWN]:
-    # if x[pygame.K_RIGHT]:
-    # if x[pygame.K_LEFT]:
-    if x[pygame.K_ESCAPE] or x[pygame.K_q] or x[pygame.K_BREAK]:
-        pygame.event.post(pygame.event.Event(pygame.QUIT))
-    
-    return x
 
 def main():
     pygame.init()
@@ -34,14 +24,14 @@ def main():
     
     while 1:
         screen.fill(pygame.Color("black"))
-        read_keyboard()
         dt = clock.tick(60)
         time += dt
         
         # process events
         for event in pygame.event.get():
-            if event.type == pygame.QUIT: 
-                sys.exit()
+            if event.type == pygame.KEYUP:
+                if event.dict['key'] in [pygame.K_q,pygame.K_ESCAPE,pygame.K_BREAK]:
+                    sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 #find gear mouse is over
                 selGear = gears[mouse.collidelist([g.rect for g in gears])]
