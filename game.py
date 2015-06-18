@@ -27,21 +27,33 @@ def main():
     screen = pygame.display.set_mode(size)
     bound = screen.get_rect()
     gears = []
-    time=0
-    
+    time = 0
+    mouse = pygame.Rect(pygame.mouse.get_pos(),(1,1))
     gears.append(Gear(bound))
+    selGear = None
     
     while 1:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT: 
-                sys.exit()
-                
         screen.fill(pygame.Color("black"))
         read_keyboard()
-        
         dt = clock.tick(60)
         time += dt
         
+        # process events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: 
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                #find gear mouse is over
+                selGear = gears[mouse.collidelist([g.rect for g in gears])]
+                ox, oy = pygame.mouse.get_pos()
+            if event.type == pygame.MOUSEBUTTONUP:
+                selGear = None
+            if event.type == pygame.MOUSEMOTION:
+                if selGear:
+                    mx, my = pygame.mouse.get_pos()
+                    selGear.setPosition(selGear.x + mx - ox, selGear.y + my - oy)
+                    ox, oy = mx, my
+        # draw items
         for g in gears:
             g.draw(screen)
             
