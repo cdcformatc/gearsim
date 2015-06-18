@@ -43,14 +43,18 @@ def main():
             if event.type == pygame.QUIT: 
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                #find gear mouse is over
-                selGear = gears[mouse.collidelist([g.rect for g in gears])]
                 ox, oy = pygame.mouse.get_pos()
+                #find gear mouse is over
+                
+                g = mouse.collidelist([g.rect for g in gears])
+                if g != -1:
+                    selGear = gears[g]
             if event.type == pygame.MOUSEBUTTONUP:
                 selGear = None
             if event.type == pygame.MOUSEMOTION:
+                mx, my = pygame.mouse.get_pos()
+                mouse.center = mx,my
                 if selGear:
-                    mx, my = pygame.mouse.get_pos()
                     selGear.setPosition(selGear.x + mx - ox, selGear.y + my - oy)
                     ox, oy = mx, my
         # draw items
