@@ -29,6 +29,8 @@ def main():
         
         # process events
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
             if event.type == pygame.KEYUP:
                 if event.dict['key'] in [pygame.K_q,pygame.K_ESCAPE,pygame.K_BREAK]:
                     sys.exit()
