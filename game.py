@@ -35,12 +35,12 @@ def main():
                 if event.dict['key'] in [pygame.K_q,pygame.K_ESCAPE,pygame.K_BREAK]:
                     sys.exit()
                 if event.dict['key'] == pygame.K_r:
-                    gears.append(Gear(bound,pygame.Color(random.randint(0,255),random.randint(0,255),random.randint(0,255))))
+                    gears.append(Gear(bound,pygame.Color(random.randint(0,255),random.randint(0,255),random.randint(1,254))))
             if event.type == pygame.MOUSEBUTTONDOWN:
                 ox, oy = pygame.mouse.get_pos()
                 #find gear mouse is over
                 
-                g = mouse.collidelist([g.rect for g in gears])
+                g = mouse.collidelist([g.pos for g in gears])
                 if g != -1:
                     selGear = gears[g]
             if event.type == pygame.MOUSEBUTTONUP:
