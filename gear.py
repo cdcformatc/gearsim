@@ -18,7 +18,7 @@ class Gear:
         
         # create rectangles
         self.pos = pygame.Rect(0, 0, self.r, self.r)
-        toDraw = pygame.Rect(self.imagerect.left+self.r/2, self.imagerect.top+self.r/2, self.r, self.r)
+        toDraw = pygame.Rect(self.rect.left+self.r/2, self.rect.top+self.r/2, self.r, self.r)
         
         # draw onto the image
         pygame.draw.rect(self.image, self.color, toDraw)
