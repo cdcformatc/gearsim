@@ -21,12 +21,10 @@ def main():
     mouse = pygame.Rect(pygame.mouse.get_pos(),(1,1))
     gears.append(Gear(bound))
     selGear = None
-    r=-10
     while 1:
         screen.fill(pygame.Color("black"))
         dt = clock.tick(60)
         time += dt
-        
         # process events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -39,13 +37,10 @@ def main():
                                 pygame.Color(random.randint(0,255),
                                             random.randint(0,255),
                                             random.randint(1,254)))
-                    newGear.w=r
-                    r*=-1
                     gears.append(newGear)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 ox, oy = pygame.mouse.get_pos()
                 #find gear mouse is over
-                
                 g = mouse.collidelist([g.pos for g in gears])
                 if g != -1:
                     selGear = gears[g]
@@ -57,12 +52,25 @@ def main():
                 if selGear:
                     selGear.setPosition(selGear.x + mx - ox, selGear.y + my - oy)
                     ox, oy = mx, my
+                    
         # draw items
         for g in gears:
             g.update(dt)
             g.draw(screen)
+            g.w=0
             
+        # drive the gears
+        drive(10,gears[0],gears[1:])
+        
+        # update the display
         pygame.display.flip()
         
+def drive(w, driveGear, gears):
+    driveGear.w = w
+
+    for i,g in enumerate(gears):
+        if(((driveGear.x-g.x)**2+(driveGear.y-g.y)**2)**0.5 <= driveGear.r+g.r):
+            drive(-driveGear.w, g, gears[:i]+gears[i+1:])
+            
 if __name__ == "__main__":
     main()
