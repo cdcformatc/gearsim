@@ -6,7 +6,7 @@ class Gear:
         self.color = color
         self.t = teeth
         self.m = mass
-        self.w = .1
+        self.w = 10
         self.degree = 0
         
         p = 2 * self.t
@@ -14,7 +14,7 @@ class Gear:
         
         # create image surface
         self.image = pygame.Surface((self.r,self.r))
-        #self.image.set_colorkey(pygame.Color("magenta"))
+        self.image.set_colorkey(pygame.Color("magenta"))
         self.image.fill(pygame.Color("magenta"))
 
         gearsurf = pygame.image.load(os.path.join(os.getcwd(), 'images', 'run.png'))
@@ -39,11 +39,8 @@ class Gear:
         self.rotimage = pygame.transform.rotate(self.image, self.degree)
         self.rect = self.rotimage.get_rect()
         self.rect.center = oldrect.center
-        self.degree += self.w * dt
+        self.degree += self.w * dt/1000.0
         
-        if self.degree > 360:
-            self.degree = 0
-
         
     def setPosition(self,newx,newy):
         self.pos.center = newx,newy

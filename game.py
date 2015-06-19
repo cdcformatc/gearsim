@@ -21,7 +21,7 @@ def main():
     mouse = pygame.Rect(pygame.mouse.get_pos(),(1,1))
     gears.append(Gear(bound))
     selGear = None
-    
+    r=-10
     while 1:
         screen.fill(pygame.Color("black"))
         dt = clock.tick(60)
@@ -35,7 +35,13 @@ def main():
                 if event.dict['key'] in [pygame.K_q,pygame.K_ESCAPE,pygame.K_BREAK]:
                     sys.exit()
                 if event.dict['key'] == pygame.K_r:
-                    gears.append(Gear(bound,pygame.Color(random.randint(0,255),random.randint(0,255),random.randint(1,254))))
+                    newGear = Gear(bound, 
+                                pygame.Color(random.randint(0,255),
+                                            random.randint(0,255),
+                                            random.randint(1,254)))
+                    newGear.w=r
+                    r*=-1
+                    gears.append(newGear)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 ox, oy = pygame.mouse.get_pos()
                 #find gear mouse is over
