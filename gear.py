@@ -3,7 +3,7 @@ import math
 import os
 class Gear:
     def __init__(self, bound, fixed=False, color=pygame.Color("white"), teeth=12, mass=10):
-        self.fixed = False
+        self.fixed = fixed
         self.color = color
         self.t = teeth
         self.m = mass

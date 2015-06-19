@@ -19,7 +19,8 @@ def main():
     gears = []
     time = 0
     mouse = pygame.Rect(pygame.mouse.get_pos(),(1,1))
-    gears.append(Gear(bound))
+    gears.append(Gear(bound,fixed=True))
+    gears[0].setPosition(100, 100)
     selGear = None
     while 1:
         screen.fill(pygame.Color("black"))
@@ -34,22 +35,22 @@ def main():
                     sys.exit()
                 if event.dict['key'] == pygame.K_r:
                     newGear = Gear(bound, 
-                                pygame.Color(random.randint(0,255),
+                                color=pygame.Color(random.randint(0,255),
                                             random.randint(0,255),
                                             random.randint(1,254)))
                     gears.append(newGear)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 ox, oy = pygame.mouse.get_pos()
                 #find gear mouse is over
-                g = mouse.collidelist([g.pos for g in gears])
+                g = mouse.collidelist([g.pos for g in gears[1:]])
                 if g != -1:
-                    selGear = gears[g]
+                    selGear = gears[g+1]
             if event.type == pygame.MOUSEBUTTONUP:
                 selGear = None
             if event.type == pygame.MOUSEMOTION:
                 mx, my = pygame.mouse.get_pos()
                 mouse.center = mx,my
-                if selGear:
+                if selGear and not selGear.fixed:
                     selGear.setPosition(selGear.x + mx - ox, selGear.y + my - oy)
                     ox, oy = mx, my
                     
