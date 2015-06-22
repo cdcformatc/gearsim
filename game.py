@@ -35,6 +35,7 @@ def main():
                     sys.exit()
                 if event.dict['key'] == pygame.K_r:
                     newGear = Gear(bound, 
+                                radius=random.randint(30,80),
                                 color=pygame.Color(random.randint(0,255),
                                             random.randint(0,255),
                                             random.randint(1,254)))
@@ -61,17 +62,19 @@ def main():
             g.w=0
             
         # drive the gears
-        drive(10,gears[0],gears[1:])
+        gears[0].w = 30
+        drive(None,gears[0],gears[1:])
         
         # update the display
         pygame.display.flip()
         
-def drive(w, driveGear, gears):
-    driveGear.w = w
+def drive(driveGear, newDrive, gears):
+    if driveGear:
+        newDrive.w = -driveGear.w*driveGear.r/float(newDrive.r)
 
     for i,g in enumerate(gears):
-        if(((driveGear.x-g.x)**2+(driveGear.y-g.y)**2)**0.5 <= driveGear.r+g.r):
-            drive(-driveGear.w, g, gears[:i]+gears[i+1:])
+        if(((newDrive.x-g.x)**2+(newDrive.y-g.y)**2)**0.5 <= newDrive.r+g.r):
+            drive(newDrive, g, gears[:i]+gears[i+1:])
             
 if __name__ == "__main__":
     main()

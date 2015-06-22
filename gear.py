@@ -2,15 +2,14 @@ import pygame
 import math
 import os
 class Gear:
-    def __init__(self, bound, fixed=False, color=pygame.Color("white"), teeth=12, mass=10):
+    def __init__(self, bound, fixed=False, color=pygame.Color("white"), radius=40, mass=10):
         self.fixed = fixed
         self.color = color
-        self.t = teeth
         self.m = mass
         self.w = 0
         self.degree = 0
         
-        self.r = int((2*self.t * self.t) / (2 * math.pi))
+        self.r = radius
         
         # create image surface
         self.image = pygame.Surface((2*self.r,2*self.r))
